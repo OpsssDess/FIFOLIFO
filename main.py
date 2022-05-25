@@ -1,7 +1,7 @@
 # LIFO and FIFO
 
-
-stack = []
+with open('goods', mode="r") as file:
+    stack = [line.strip() for line in file]
 
 while True:
     print('Вы хотите взять или положить?(put or take)')
@@ -25,8 +25,8 @@ while True:
         print('Откуда Вам выдать вещь (LIFO или FIFO)?')
         answer = input('')
         if answer == 'LIFO':
-                print(f'возьмите {stack.pop()}')
-                print(stack)
+            print(f'возьмите {stack.pop()}')
+            print(stack)
         else:
-                print(f'возьмите {stack.pop()}')
-                print(stack)
+            print(f'возьмите {stack.pop()}')
+            print(stack)
