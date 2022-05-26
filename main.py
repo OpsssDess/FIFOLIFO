@@ -1,32 +1,37 @@
 # LIFO and FIFO
-
+import json
 with open('goods', mode="r") as file:
-    stack = [line.strip() for line in file]
+    stock = json.load(file)
+
+print(stock)
 
 while True:
-    print('Вы хотите взять или положить?(put or take)')
+    print('Вы хотите взять или положить?(put or take, quit)')
     answer = input('')
-
     if answer == 'put':
         print('Куда хотите положить свою вещь (LIFO или FIFO)?')
         answer = input('')
         thing = input('Что отдаёте? ')
+        count = int(input("Сколько штук?"))
         if answer == 'LIFO':
-            stack.append(thing)
-            print(stack)
+            stock.append({"name": thing,  "amount": count})
+            print(stock)
         else:
-            stack.insert(0, thing)
-            print(stack)
-
+            stock.insert(0, {"name": thing,  "amount": count})
+            print(stock)
+    elif answer == 'quit':
+        with open('goods', 'w', encoding='utf-8') as f:
+            json.dump(stock, f)
+        break
     else:
-        if not stack:
+        if not stock:
             print('сейчас можно только положить!')
             continue
-        print('Откуда Вам выдать вещь (LIFO или FIFO)?')
-        answer = input('')
-        if answer == 'LIFO':
-            print(f'возьмите {stack.pop()}')
-            print(stack)
         else:
-            print(f'возьмите {stack.pop()}')
-            print(stack)
+            b = stock[len(stock)-1]
+            if b['amount'] == 1:
+                stock.pop()
+            else:
+                b['amount'] -= 1
+            print(f'Вы можете взять 1 штуку {b["name"]}')
+            print(stock)
